@@ -5,23 +5,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Nationalized;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
-@Table(name = "thuong_hieu")
-public class ThuongHieu extends PrimaryEnity {
+@Table(name = "kich_thuoc")
 
+public class KichThuoc extends PrimaryEnity {
     @Nationalized
     @Column(name = "name")
-    @NotNull(message = "Tên không được để trống!")
+    @NotNull(message = "Tên không được bỏ trống")
     private String name;
-
 }

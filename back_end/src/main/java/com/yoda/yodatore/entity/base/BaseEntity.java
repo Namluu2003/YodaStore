@@ -36,8 +36,8 @@ public class BaseEntity {
     public void prePersist(){
         createAt = LocalDateTime.now();
         updateAt = LocalDateTime.now();
-        createBy = "nam";
-        updateBy = "nam";
+        createBy = "Luu Van Nam";
+        updateBy = "Luu Van Nam";
 
     }
     @PreUpdate
