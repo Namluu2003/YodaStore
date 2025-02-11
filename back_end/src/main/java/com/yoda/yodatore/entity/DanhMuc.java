@@ -20,6 +20,6 @@ import org.hibernate.annotations.Nationalized;
 public class DanhMuc extends PrimaryEnity {
     @Nationalized
     @Column(name = "name")
-    @NotNull(message = "Tên không được để trống!")
+    @NotNull(message = "Tên không được để trống")
     private String name;
 }
