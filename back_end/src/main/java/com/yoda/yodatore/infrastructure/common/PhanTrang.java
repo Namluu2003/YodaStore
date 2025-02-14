@@ -6,14 +6,14 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @Getter
-public class PhanTrang<phanTrang> {
-    private List<phanTrang> data;
-    private long tongTrang;
-    private int trangHienTai;
+public class PhanTrang<T> {
+    private List<T> data;
+    private long totalPages;
+    private int currentPage;
 
-    public PhanTrang(Page<phanTrang> page){
+    public PhanTrang(Page<T> page) {
         this.data = page.getContent();
-        this.tongTrang = page.getTotalPages();
-        this.trangHienTai = page.getNumber();
+        this.totalPages = page.getTotalPages();
+        this.currentPage = page.getNumber();
     }
 }

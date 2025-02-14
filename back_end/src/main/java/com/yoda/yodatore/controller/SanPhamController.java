@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/sanpham")
+@RequestMapping("/api/shoe")
 public class SanPhamController {
 
     @Autowired

@@ -3,6 +3,7 @@ package com.yoda.yodatore.controller;
 import com.yoda.yodatore.entity.DanhMuc;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
+import com.yoda.yodatore.infrastructure.request.DanhMucRequest;
 import com.yoda.yodatore.infrastructure.response.DanhMucResponse;
 import com.yoda.yodatore.infrastructure.response.DeResponse;
 import com.yoda.yodatore.service.DanhMucService;
@@ -11,16 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/danhmuc")
+@RequestMapping("/api/category")
 public class DanhMucController {
     @Autowired
     private DanhMucService danhMucService;
 
     @GetMapping
-    public PhanTrang<DanhMucResponse> getAll(@RequestParam(required = false, defaultValue = "") String name,
-                                             @RequestParam(required = false, defaultValue = "1") Integer page,
-                                             @RequestParam(required = false) Boolean status) {
-        return danhMucService.getAll(name, page, status);
+    public PhanTrang<DanhMucResponse> getAll(DanhMucRequest request) {
+        return danhMucService.getAll(request);
     }
 
     @GetMapping("/{id}")
@@ -29,13 +28,13 @@ public class DanhMucController {
     }
 
     @PostMapping
-    public ResponseObject create(@RequestBody @Valid DanhMuc danhMuc) {
-        return new ResponseObject(danhMucService.add(danhMuc));
+    public ResponseObject create(@RequestBody @Valid DanhMucRequest request) {
+        return new ResponseObject(danhMucService.add(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid DanhMuc danhMuc) {
-        return new ResponseObject(danhMucService.update(id, danhMuc));
+    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid DanhMucRequest request) {
+        return new ResponseObject(danhMucService.update(id, request));
     }
 
     @DeleteMapping("/{id}")

@@ -5,6 +5,7 @@ import com.yoda.yodatore.entity.DanhMuc;
 import com.yoda.yodatore.entity.ThuongHieu;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
+import com.yoda.yodatore.infrastructure.request.ThuongHieuRequest;
 import com.yoda.yodatore.infrastructure.response.ThuongHieuResponse;
 import com.yoda.yodatore.service.ThuongHieuService;
 import jakarta.validation.Valid;
@@ -12,17 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/thuonghieu")
+@RequestMapping("/api/brand")
 public class ThuongHieuController {
 
     @Autowired
     private ThuongHieuService thuongHieuService;
 
     @GetMapping
-    public PhanTrang<ThuongHieuResponse> getAll(@RequestParam(required = false, defaultValue = "") String name,
-                                                @RequestParam(required = false, defaultValue = "1") Integer page,
-                                                @RequestParam(required = false) Boolean status) {
-        return thuongHieuService.getAll(name, page, status);
+    public PhanTrang<ThuongHieuResponse> getAll(ThuongHieuRequest request) {
+        return thuongHieuService.getAll(request);
     }
 
     @GetMapping("/{id}")
@@ -31,13 +30,13 @@ public class ThuongHieuController {
     }
 
     @PostMapping
-    public ResponseObject create(@RequestBody @Valid ThuongHieu thuongHieu) {
-        return new ResponseObject(thuongHieuService.add(thuongHieu));
+    public ResponseObject create(@RequestBody @Valid ThuongHieuRequest request) {
+        return new ResponseObject(thuongHieuService.add(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid ThuongHieu thuongHieu) {
-        return new ResponseObject(thuongHieuService.update(id, thuongHieu));
+    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid ThuongHieuRequest request) {
+        return new ResponseObject(thuongHieuService.update(id, request));
     }
 
     @DeleteMapping("/{id}")

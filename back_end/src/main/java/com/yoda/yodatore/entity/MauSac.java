@@ -13,6 +13,7 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 @Table(name = "mau_sac")
 

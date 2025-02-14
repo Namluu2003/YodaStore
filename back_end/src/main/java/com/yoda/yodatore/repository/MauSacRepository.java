@@ -1,6 +1,7 @@
 package com.yoda.yodatore.repository;
 
 import com.yoda.yodatore.entity.MauSac;
+import com.yoda.yodatore.infrastructure.request.MauSacRequest;
 import com.yoda.yodatore.infrastructure.response.KichThuocResponse;
 import com.yoda.yodatore.infrastructure.response.MauSacResponse;
 import org.springframework.data.domain.Page;
@@ -11,13 +12,19 @@ import org.springframework.data.repository.query.Param;
 
 public interface MauSacRepository extends JpaRepository<MauSac, Long> {
 
-    Boolean existsByNameIgnoreCaseAndNameNot(String name, String exceptName);
-
-    @Query("""
-            SELECT b.id as id,b.name as name FROM MauSac b
-            WHERE (:name IS NULL OR b.name LIKE %:name%)
-            AND (:status IS NULL OR b.deleted = :status)
-            ORDER BY b.createAt
-            """)
-    Page<MauSacResponse> getAll(@Param("name") String name, @Param("status") Boolean status, Pageable pageable);
+    Boolean existsByNameIgnoreCase(String name);
+    @Query(value = """
+            SELECT
+            c.id AS id,
+            c.name AS name,
+            c.create_at AS createAt,
+            ROW_NUMBER() OVER(ORDER BY c.create_at DESC) AS indexs,
+            c.deleted AS status
+            FROM mau_sac c
+            LEFT JOIN san_pham_chi_tiet sd ON c.id = sd.kich_thuoc_id
+            WHERE (:#{#req.name} IS NULL OR c.name LIKE %:#{#req.name}%)
+            AND (:#{#req.status} IS NULL OR c.deleted = :#{#req.status})
+            GROUP BY c.id
+            """, nativeQuery = true)
+    Page<MauSacResponse> getAllMauSac(@Param("req") MauSacRequest request, Pageable pageable);
 }

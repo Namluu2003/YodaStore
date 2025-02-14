@@ -16,7 +16,7 @@ public class SanPhamRequest extends PageableRequest {
     @NotEmpty(message = "Tên không được để trống.")
     private String name;
     @NotNull(message = "Thương hiệu không được để trống.")
-    private Long thuong_hieu;
+    private Long thuongHieu;
     @NotNull(message = "Danh mục không được để trống.")
-    private Long danh_muc;
+    private Long danhMuc;
 }

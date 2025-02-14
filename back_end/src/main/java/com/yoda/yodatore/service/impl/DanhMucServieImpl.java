@@ -1,8 +1,12 @@
 package com.yoda.yodatore.service.impl;
 
 import com.yoda.yodatore.entity.DanhMuc;
+import com.yoda.yodatore.entity.MauSac;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
+import com.yoda.yodatore.infrastructure.converter.DanhMucConvert;
 import com.yoda.yodatore.infrastructure.exception.NgoaiLe;
+import com.yoda.yodatore.infrastructure.request.DanhMucRequest;
+import com.yoda.yodatore.infrastructure.request.MauSacRequest;
 import com.yoda.yodatore.infrastructure.response.DanhMucResponse;
 import com.yoda.yodatore.infrastructure.response.DeResponse;
 import com.yoda.yodatore.infrastructure.response.KichThuocResponse;
@@ -18,8 +22,11 @@ public class DanhMucServieImpl implements DanhMucService {
     private DanhMucRepository repository;
 
 
-    public PhanTrang<DanhMucResponse> getAll(String name, Integer page, Boolean status) {
-        return new PhanTrang<>(repository.getAll(name, status, PageRequest.of(page - 1, 5)));
+    @Autowired
+    private DanhMucConvert danhMucConvert;
+
+    public PhanTrang<DanhMucResponse> getAll(DanhMucRequest request) {
+        return new PhanTrang<>(repository.getAllDanhMuc(request, PageRequest.of(request.getPage() - 1, 5)));
     }
 
 
@@ -28,21 +35,28 @@ public class DanhMucServieImpl implements DanhMucService {
     }
 
 
-    public DanhMuc add(DanhMuc danhMuc) {
-        if (repository.existsByNameIgnoreCaseAndNameNot(danhMuc.getName(), "")) {
-            throw new NgoaiLe("Thương hiệu " + danhMuc.getName() + " đã tồn tại!");
+    public DanhMuc add(DanhMucRequest request) {
+        if (repository.existsByNameIgnoreCase(request.getName())) {
+            throw new NgoaiLe("Danh Mục " + request.getName() + " đã tồn tại!");
         }
+        DanhMuc danhMuc = danhMucConvert.addconvertRequest(request);
         return repository.save(danhMuc);
     }
 
 
-    public DanhMuc update(Long id, DanhMuc danhMuc) {
-        DanhMuc name = this.getOne(id);
-        if (repository.existsByNameIgnoreCaseAndNameNot(danhMuc.getName(), name.getName())) {
-            throw new NgoaiLe("Danh mục " + danhMuc.getName() + " đã tồn tại!");
+
+    public DanhMuc update(Long id, DanhMucRequest request) {
+        DanhMuc name = repository.findById(id).get();
+        if (repository.existsByNameIgnoreCase(request.getName())) {
+            if (name.getName().equals(request.getName())){
+                return repository.save(danhMucConvert.convertRequestToEntity(name,request));
+            }
+            throw new NgoaiLe("Danh mục " + request.getName() + " đã tồn tại!");
         }
-        name.setName(danhMuc.getName());
-        return repository.save(name);
+        else {
+            return repository.save(danhMucConvert.convertRequestToEntity(name,request));
+        }
+
     }
 
 
