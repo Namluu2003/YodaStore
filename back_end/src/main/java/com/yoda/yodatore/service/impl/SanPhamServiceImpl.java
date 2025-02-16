@@ -48,7 +48,12 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.save(sanPhamConvert.convertRequestToEntity(name, request));
     }
 }
+//    public SanPham delete(Long id) {
+//        return null;
+//    }
     public SanPham delete(Long id) {
-        return null;
+        SanPham sanPham = this.getOne(id);
+        sanPham.setDeleted(!sanPham.getDeleted());
+        return sanPhamRepository.save(sanPham);
     }
 }

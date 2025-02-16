@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MauSacRepository extends JpaRepository<MauSac, Long> {
 
     Boolean existsByNameIgnoreCase(String name);
@@ -19,11 +21,11 @@ public interface MauSacRepository extends JpaRepository<MauSac, Long> {
             c.name AS name,
             c.create_at AS createAt,
             ROW_NUMBER() OVER(ORDER BY c.create_at DESC) AS indexs,
-            c.deleted AS status
+            c.status AS status
             FROM mau_sac c
             LEFT JOIN san_pham_chi_tiet sd ON c.id = sd.kich_thuoc_id
             WHERE (:#{#req.name} IS NULL OR c.name LIKE %:#{#req.name}%)
-            AND (:#{#req.status} IS NULL OR c.deleted = :#{#req.status})
+            AND (:#{#req.status} IS NULL OR c.status = :#{#req.status})
             GROUP BY c.id
             """, nativeQuery = true)
     Page<MauSacResponse> getAllMauSac(@Param("req") MauSacRequest request, Pageable pageable);

@@ -20,15 +20,15 @@ public class SanPhamConvert {
         public SanPham addconvertRequest(SanPhamRequest request){
                 SanPham sanPham = SanPham.builder()
                         .name(request.getName())
-                        .danhMuc(danhMucRepository.findById(request.getDanhMuc()).get())
-                        .thuongHieu(thuongHieuRepository.findById(request.getThuongHieu()).get())
+                        .category(danhMucRepository.findById(request.getCategory()).get())
+                        .brand(thuongHieuRepository.findById(request.getBrand()).get())
                         .build();
                 return sanPham;
         }
         public SanPham convertRequestToEntity(SanPham sanPham, SanPhamRequest request){
                 sanPham.setName(request.getName());
-                sanPham.setDanhMuc(danhMucRepository.findById(request.getDanhMuc()).get());
-                sanPham.setThuongHieu(thuongHieuRepository.findById(request.getThuongHieu()).get());
+                sanPham.setCategory(danhMucRepository.findById(request.getCategory()).get());
+                sanPham.setBrand(thuongHieuRepository.findById(request.getBrand()).get());
 
                 return sanPham;
         }

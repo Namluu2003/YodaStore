@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,36 +19,38 @@ import java.math.BigDecimal;
 @Table(name = "san_pham_chi_tiet")
 public class SanPhamChiTiet extends PrimaryEnity {
 
-    @Column(name = "name" , length = 50)
+    @Column(name = "code" , length = 50)
     private String code;
     @Column(name = "gia")
-    private BigDecimal gia;
+    private BigDecimal price;
     @Column(name = "so_luong")
-    private Integer so_luong;
+    private Integer quantity;
     @Column(name = "can_nang")
-    private Double can_nang;
+    private Double weight;
 
 
 
     @ManyToOne
     @JoinColumn(name = "san_pham_id")
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
-    private SanPham sanPham;
+    private SanPham shoe;
 
     @ManyToOne
     @JoinColumn(name = "kich_thuoc_id")
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
-    private KichThuoc kichThuoc;
+    private KichThuoc size;
 
     @ManyToOne
     @JoinColumn(name = "de_id")
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
-    private De de;
+    private De sole;
 
     @ManyToOne
     @JoinColumn(name = "mau_sac_id")
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
-    private MauSac mauSac;
+    private MauSac color;
 
-
+    @JsonIgnoreProperties(value = {"sanPhamChiTiet", "createAt", "updateAt", "createBy", "updateBy", "deleted"})
+    @OneToMany(mappedBy = "sanPhamChiTiet", fetch = FetchType.LAZY)
+    private List<Images> images;
 }

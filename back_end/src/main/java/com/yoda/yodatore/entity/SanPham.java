@@ -25,17 +25,19 @@ public class SanPham extends PrimaryEnity{
     @ManyToOne
     @JoinColumn(name = "danh_muc_id")
     @JsonIgnoreProperties(value = {"createAt", "updateAt", "createBy", "updateBy", "deleted"})
-    private DanhMuc danhMuc;
+    private DanhMuc category;
 
     @ManyToOne
     @JoinColumn(name = "thuong_hieu_id")
     @JsonIgnoreProperties(value = {"createAt", "updateAt", "createBy", "updateBy", "deleted"})
-    private ThuongHieu thuongHieu;
+    private ThuongHieu brand;
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "sanPham")
+    @OneToMany(mappedBy = "shoe")
     List<SanPhamChiTiet> SanPhamChiTiet;
 
+    @Column(name = "mo_ta")
+    private String description;
 
 }
