@@ -25,6 +25,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Long> {
             SUM(sd.so_luong) AS quantity,
             ct.name AS category,
             br.name AS brand,
+            d.name AS sole,
             MAX(sd.gia) AS maxPrice,
             MIN(sd.gia) AS minPrice,
             s.deleted AS status
@@ -34,12 +35,14 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Long> {
             LEFT JOIN kich_thuoc sz ON sz.id = sd.kich_thuoc_id
             LEFT JOIN danh_muc ct ON ct.id = s.danh_muc_id
             LEFT JOIN thuong_hieu br ON br.id = s.thuong_hieu_id
+            LEFT JOIN de d ON d.id = s.de_id
             LEFT JOIN (SELECT san_pham_chi_tiet_id, 
             GROUP_CONCAT(DISTINCT name) AS name FROM images GROUP BY san_pham_chi_tiet_id
             ) img ON sd.id = img.san_pham_chi_tiet_id
             WHERE (:#{#req.name} IS NULL OR s.name LIKE %:#{#req.name}%)
             AND (:#{#req.brand} IS NULL OR s.thuong_hieu_id = :#{#req.brand})
             AND (:#{#req.category} IS NULL OR s.danh_muc_id = :#{#req.category})
+            AND (:#{#req.sole} IS NULL OR s.de_id = :#{#req.sole})
             AND (:#{#req.status} IS NULL OR s.deleted = :#{#req.status})
             GROUP BY s.id
             """, nativeQuery = true)

@@ -76,7 +76,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         SanPhamChiTiet sanPhamChiTietsave = new SanPhamChiTiet();
         SanPhamChiTiet old = sanPhamChiTietRepository.findById(id).get();
         if (sanPhamChiTietRepository.findByShoeIdAndColorIdAndSizeId(request.getShoe(), request.getColor(), request.getSize()) != null) {
-            if (old.getSize().getId() == request.getSize() && old.getShoe().getId() == request.getShoe() && old.getColor().getId() == request.getColor() && old.getSole().getId() == request.getSole()) {
+            if (old.getSize().getId() == request.getSize() && old.getShoe().getId() == request.getShoe() && old.getColor().getId() == request.getColor() ) {
                 sanPhamChiTietsave = sanPhamChiTietRepository.save(sanPhamChiTietConvert.convertRequestToEntity(old, request));
                 if(sanPhamChiTietsave!=null){
                     for (String x: request.getListImages()) {

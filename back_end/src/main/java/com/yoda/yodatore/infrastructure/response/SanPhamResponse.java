@@ -23,6 +23,7 @@ public interface SanPhamResponse {
     String getBrand();
 
     String getCategory();
+    String getSole();
 
     Integer getQuantity();
 

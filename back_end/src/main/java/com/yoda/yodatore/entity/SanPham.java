@@ -32,6 +32,10 @@ public class SanPham extends PrimaryEnity{
     @JsonIgnoreProperties(value = {"createAt", "updateAt", "createBy", "updateBy", "deleted"})
     private ThuongHieu brand;
 
+    @ManyToOne
+    @JoinColumn(name = "de_id")
+    @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
+    private De sole;
 
     @JsonIgnore
     @OneToMany(mappedBy = "shoe")
