@@ -6,6 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 @NoArgsConstructor
@@ -13,11 +18,13 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @Builder
+
 @Entity
-@Table(name = "danh_muc")
-public class DanhMuc extends PrimaryEnity {
+@Table(name = "role")
+public class Role extends PrimaryEnity {
     @Nationalized
     @Column(name = "name")
+
     @NotNull(message = "Tên không được để trống")
     private String name;
 }

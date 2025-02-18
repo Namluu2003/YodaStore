@@ -9,8 +9,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class GenCode {
-//    @Autowired
-//    private static IBillRepository billRepository;
+
     public static String genCodeByName(String name){
 
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
