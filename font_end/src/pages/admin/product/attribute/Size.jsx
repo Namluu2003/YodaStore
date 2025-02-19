@@ -82,7 +82,7 @@ function Size() {
 
   const columns = [
     {
-      title: "#",
+      title: "STT",
       dataIndex: "index",
       key: "index",
       className: "text-center",
@@ -130,7 +130,7 @@ function Size() {
                   setItem(item);
                   showModalUpdate(item);
                 }}
-                className="btn btn-sm text-warning"
+                className="btn btn-sm text-primary"
               >
                 <i className="fas fa-edit"></i>
               </button>
@@ -172,7 +172,7 @@ function Size() {
     confirm({
       title: "Xác nhận",
       icon: <ExclamationCircleFilled />,
-      content: "Bạn có chắc muốn thêm size mới? ",
+      content: "Bạn có chắc muốn thêm kích thước mới? ",
       okText: "Xác nhận",
       okType: "danger",
       cancelText: "Hủy",
@@ -206,7 +206,7 @@ function Size() {
     confirm({
       title: "Xác nhận ",
       icon: <ExclamationCircleFilled />,
-      content: "Bạn có chắc muốn cập nhật số size? ",
+      content: "Bạn có chắc muốn cập nhật số kích thước? ",
       okText: "Xác nhận",
       okType: "danger",
       cancelText: "Hủy",
@@ -242,10 +242,10 @@ function Size() {
       <h6 className="fw-semibold">Danh sách kích cỡ</h6>
       <Row gutter={10}>
         <Col span={13}>
-          <label className="mb-1">Số size</label>
+          <label className="mb-1">Số kích thước</label>
           <Input
             onChange={(event) => setSearchValue(event.target.value)}
-            placeholder="Tìm kiếm số size..."
+            placeholder="Tìm kiếm số kích thước..."
           />
         </Col>
         <Col span ={6}></Col>
@@ -266,9 +266,9 @@ function Size() {
             <Button
               type="primary"
               onClick={showModalAdd}
-              className="bg-warning w-100"
+              className="bg-primary w-200"
             >
-              <i className="fas fa-plus-circle me-1"></i>Thêm size
+              <i className="fas fa-plus-circle me-1"></i>Thêm kích thước
             </Button>
           </Link>
         </Col>
@@ -278,11 +278,11 @@ function Size() {
         columns={columns}
         className="mt-3"
         pagination={{
-          showSizeChanger: true,
+          // showSizeChanger: true,
           current: currentPage,
           pageSize: pageSize,
-          pageSizeOptions: [5, 10, 20, 50, 100],
-          showQuickJumper: true,
+          // pageSizeOptions: [5, 10, 20, 50, 100],
+          // showQuickJumper: true,
           total: totalPages * pageSize,
           onChange: (page, pageSize) => {
             setCurrentPage(page);
@@ -292,20 +292,20 @@ function Size() {
       />
 
       <Modal
-        title="Thêm Size"
+        title="Thêm kích thước"
         open={isModalAddOpen}
         onCancel={handleCancelAdd}
         footer=""
       >
         <Form onFinish={handleAdd} layout="vertical" form={formAdd}>
           <Form.Item
-            label={"Size"}
+            label={"Kích thước"}
             name={"name"}
             rules={[
-              { required: true, message: "Số size không được để trống!" },
+              { required: true, message: "Số kích thước không được để trống!" },
             ]}
           >
-            <Input placeholder="Nhập số size..." />
+            <Input placeholder="Nhập số kích thước..." />
           </Form.Item>
           <div className="d-flex justify-content-end">
             <Button type="primary" htmlType="submit">
@@ -316,20 +316,20 @@ function Size() {
       </Modal>
 
       <Modal
-        title="Chỉnh sửa size"
+        title="Chỉnh sửa kích thước"
         open={isModalUpdateOpen}
         onCancel={handleCancelUpdate}
         footer=""
       >
         <Form onFinish={handleUpdate} layout="vertical" form={formUpdate}>
           <Form.Item
-            label={"Size"}
+            label={"Kích thuớc"}
             name={"name"}
             rules={[
-              { required: true, message: "Số size không được để trống!" },
+              { required: true, message: "Số kích thước không được để trống!" },
             ]}
           >
-            <Input placeholder="Nhập số size..." />
+            <Input placeholder="Nhập số kích thước..." />
           </Form.Item>
           <div className="d-flex justify-content-end">
             <Button type="primary" htmlType="submit">
