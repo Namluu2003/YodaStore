@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,8 @@ import org.hibernate.annotations.Nationalized;
 @Getter
 @Setter
 @ToString
+@Builder
+
 @Entity
 @Table(name = "lich_su_hoa_don")
 public class LichSuHoaDon extends PrimaryEnity {

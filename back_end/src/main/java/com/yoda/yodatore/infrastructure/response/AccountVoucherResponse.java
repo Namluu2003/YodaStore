@@ -6,8 +6,8 @@ import com.yoda.yodatore.entity.Voucher;
 
 public interface AccountVoucherResponse {
 
-     Account getAccount();
+     String getAccount();
 
-     Voucher getVoucher();
+     String getVoucher();
 
 }

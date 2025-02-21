@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
+@Builder
+
 @Entity
 @Table(name = "hoa_don_chi_tiet")
 public class HoaDonChiTiet extends PrimaryEnity {

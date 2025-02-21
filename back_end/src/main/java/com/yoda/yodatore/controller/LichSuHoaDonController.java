@@ -4,8 +4,10 @@ package com.yoda.yodatore.controller;
 import com.yoda.yodatore.entity.LichSuHoaDon;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
+import com.yoda.yodatore.infrastructure.request.LichSuHoaDonRequest;
 import com.yoda.yodatore.infrastructure.response.LichSuHoaDonReponse;
 import com.yoda.yodatore.service.LichSuHoaDonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,10 +29,8 @@ public class LichSuHoaDonController {
     private LichSuHoaDonService service;
 
     @GetMapping
-    public PhanTrang<LichSuHoaDonReponse> getAll(
-            @RequestParam(required = false,defaultValue = "1") Integer page
-    ){
-        return service.getAll(page);
+    public PhanTrang<LichSuHoaDonReponse> getAll(LichSuHoaDonRequest request){
+        return service.getAll(request);
     }
 
     @GetMapping("/{id}")
@@ -39,13 +39,13 @@ public class LichSuHoaDonController {
     }
 
     @PostMapping("")
-    public ResponseObject add(@RequestBody @Validated LichSuHoaDon lichSuHoaDon) {
-        return new ResponseObject(service.add(lichSuHoaDon));
+    public ResponseObject add(@RequestBody @Valid LichSuHoaDonRequest request) {
+        return new ResponseObject(service.add(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseObject update(@PathVariable Long id, @RequestBody @Validated LichSuHoaDon lichSuHoaDon) {
-        return new ResponseObject(service.update(id, lichSuHoaDon));
+    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid LichSuHoaDonRequest request) {
+        return new ResponseObject(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")

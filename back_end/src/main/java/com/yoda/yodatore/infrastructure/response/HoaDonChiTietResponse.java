@@ -15,8 +15,8 @@ public interface HoaDonChiTietResponse {
 
      Boolean getTrangThai();
 
-     HoaDon getHoaDon();
+     Long  getHoaDon();
 
-     SanPham getSanPham();
+     Long  getSanPham();
 
 }

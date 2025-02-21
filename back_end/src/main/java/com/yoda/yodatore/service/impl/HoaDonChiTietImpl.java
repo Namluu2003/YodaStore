@@ -1,14 +1,19 @@
 package com.yoda.yodatore.service.impl;
 
 
+import com.yoda.yodatore.entity.AccountVoucher;
 import com.yoda.yodatore.entity.HoaDonChiTiet;
+import com.yoda.yodatore.infrastructure.common.PageableRequest;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
+import com.yoda.yodatore.infrastructure.converter.HoaDonChiTietConverter;
+import com.yoda.yodatore.infrastructure.request.HoaDonChiTietRequest;
 import com.yoda.yodatore.infrastructure.response.HoaDonChiTietResponse;
 import com.yoda.yodatore.repository.HoaDonChiTietRepository;
 import com.yoda.yodatore.service.HoaDonChiTietService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,14 +24,13 @@ public class HoaDonChiTietImpl implements HoaDonChiTietService {
     @Autowired
     private HoaDonChiTietRepository repository;
 
-    @Override
-    public PhanTrang<HoaDonChiTietResponse> getAll(Integer page) {
-// Đảm bảo page >= 0
-        if (page < 1) {
-            page = 1; // Đặt về trang đầu tiên nếu page < 1
-        }
+    @Autowired
+    private HoaDonChiTietConverter converter;
 
-        return new PhanTrang<>(repository.getAll(PageRequest.of(page - 1, 5)));
+    @Override
+    public PhanTrang<HoaDonChiTietResponse> getAll(HoaDonChiTietRequest request) {
+        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSizePage());
+        return new PhanTrang<>(repository.getAllHoaDonChiTiet(request, pageable));
     }
 
     @Override
@@ -35,33 +39,24 @@ public class HoaDonChiTietImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet add(HoaDonChiTiet hoaDonChiTiet) {
+    public HoaDonChiTiet add(HoaDonChiTietRequest request) {
+
+        HoaDonChiTiet hoaDonChiTiet = converter.addconvertRequest(request);
         return repository.save(hoaDonChiTiet);
     }
 
     @Override
-    public HoaDonChiTiet update(Long id, HoaDonChiTiet hoaDonChiTiet) {
+    public HoaDonChiTiet update(Long id, HoaDonChiTietRequest request) {
 
-        HoaDonChiTiet hoaDonChiTiet1 = this.getOne(id);
-
-        hoaDonChiTiet1.setGia(hoaDonChiTiet.getGia());
-        hoaDonChiTiet1.setSoLuong(hoaDonChiTiet.getSoLuong());
-        hoaDonChiTiet1.setTrangThai(hoaDonChiTiet.getTrangThai());
-        hoaDonChiTiet1.setHoaDon(hoaDonChiTiet.getHoaDon());
-        hoaDonChiTiet1.setSanPham(hoaDonChiTiet.getSanPham());
-
-        return repository.save(hoaDonChiTiet1);
+        HoaDonChiTiet entity = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("X Không tìm thấy Hóa đơn chi tiết với ID: " + id));
+        return repository.save(converter.convertRequestToEntity(entity, request));
     }
 
     @Override
     public HoaDonChiTiet delete(Long id) {
-        Optional<HoaDonChiTiet> hoaDonChiTiet = repository.findById(id);
-        if(hoaDonChiTiet.isEmpty()){
-            throw new EntityNotFoundException("Không tìm thấy hóa đơn có ID: " + id);
-        }
-        repository.deleteById(id);
-
-        return hoaDonChiTiet.get();
+        HoaDonChiTiet hoaDonChiTiet = repository.findById(id).get();
+        hoaDonChiTiet.setDeleted(!hoaDonChiTiet.getDeleted());
+        return repository.save(hoaDonChiTiet);
     }
-
 }

@@ -3,8 +3,10 @@ package com.yoda.yodatore.controller;
 import com.yoda.yodatore.entity.HoaDon;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
+import com.yoda.yodatore.infrastructure.request.HoaDonRequest;
 import com.yoda.yodatore.infrastructure.response.HoaDonResponse;
 import com.yoda.yodatore.service.HoaDonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,10 +27,8 @@ public class HoaDonController {
     private HoaDonService service;
 
     @GetMapping
-    public PhanTrang<HoaDonResponse> getAll(
-            @RequestParam(required = false,defaultValue = "1") Integer page
-            ){
-        return service.getAll(page);
+    public PhanTrang<HoaDonResponse> getAll(HoaDonRequest request){
+        return service.getAll(request);
     }
 
     @GetMapping("/{id}")
@@ -36,14 +36,14 @@ public class HoaDonController {
         return service.getOne(id);
     }
 
-    @PostMapping("")
-    public ResponseObject add(@RequestBody @Validated HoaDon hoaDon) {
-        return new ResponseObject(service.add(hoaDon));
+    @PostMapping("/add")
+    public ResponseObject add(@RequestBody @Valid HoaDonRequest request) {
+        return new ResponseObject(service.add(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseObject update(@PathVariable Long id, @RequestBody @Validated HoaDon hoaDon) {
-        return new ResponseObject(service.update(id, hoaDon));
+    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid HoaDonRequest request) {
+        return new ResponseObject(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")

@@ -3,8 +3,10 @@ package com.yoda.yodatore.controller;
 import com.yoda.yodatore.entity.AccountVoucher;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
+import com.yoda.yodatore.infrastructure.request.AccountVoucherRequest;
 import com.yoda.yodatore.infrastructure.response.AccountVoucherResponse;
 import com.yoda.yodatore.service.AccountVoucherService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,10 +27,8 @@ public class AccountVoucherController {
     private AccountVoucherService service;
 
     @GetMapping
-    public PhanTrang<AccountVoucherResponse> getAll(
-            @RequestParam(required = false,defaultValue = "1") Integer page
-    ){
-        return service.getAll(page);
+    public PhanTrang<AccountVoucherResponse> getAll(AccountVoucherRequest request){
+        return service.getAll(request);
     }
 
     @GetMapping("/{id}")
@@ -37,13 +37,13 @@ public class AccountVoucherController {
     }
 
     @PostMapping("")
-    public ResponseObject add(@RequestBody @Validated AccountVoucher accountVoucher) {
-        return new ResponseObject(service.add(accountVoucher));
+    public ResponseObject add(@RequestBody @Valid AccountVoucherRequest request) {
+        return new ResponseObject(service.add(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseObject update(@PathVariable Long id, @RequestBody @Validated AccountVoucher accountVoucher) {
-        return new ResponseObject(service.update(id, accountVoucher));
+    public ResponseObject update(@PathVariable Long id, @RequestBody @Valid AccountVoucherRequest request) {
+        return new ResponseObject(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")

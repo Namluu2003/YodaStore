@@ -9,5 +9,5 @@ public interface LichSuHoaDonReponse {
 
      String getGhiChu();
 
-     HoaDon getHoaDon();
+     Long getHoaDon();
 }

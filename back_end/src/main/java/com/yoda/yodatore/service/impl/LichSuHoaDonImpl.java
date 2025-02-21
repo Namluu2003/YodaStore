@@ -3,12 +3,15 @@ package com.yoda.yodatore.service.impl;
 
 import com.yoda.yodatore.entity.LichSuHoaDon;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
+import com.yoda.yodatore.infrastructure.converter.LichSuHoaDonConverter;
+import com.yoda.yodatore.infrastructure.request.LichSuHoaDonRequest;
 import com.yoda.yodatore.infrastructure.response.LichSuHoaDonReponse;
 import com.yoda.yodatore.repository.LichSuHoaDonRepository;
 import com.yoda.yodatore.service.LichSuHoaDonService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,10 +22,14 @@ public class LichSuHoaDonImpl implements LichSuHoaDonService {
     @Autowired
     private LichSuHoaDonRepository repository;
 
-    @Override
-    public PhanTrang<LichSuHoaDonReponse> getAll(Integer page) {
+    @Autowired
+    private LichSuHoaDonConverter converter;
 
-        return new PhanTrang<>(repository.getAll(PageRequest.of(page - 1, 5)));
+    @Override
+    public PhanTrang<LichSuHoaDonReponse> getAll(LichSuHoaDonRequest request) {
+
+        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSizePage());
+        return new PhanTrang<>(repository.getAllLichSuHoaDon(request, pageable));
     }
 
     @Override
@@ -31,29 +38,24 @@ public class LichSuHoaDonImpl implements LichSuHoaDonService {
     }
 
     @Override
-    public LichSuHoaDon add(LichSuHoaDon lichSuHoaDon) {
+    public LichSuHoaDon add(LichSuHoaDonRequest request) {
+
+        LichSuHoaDon lichSuHoaDon = converter.addconvertRequest(request);
         return repository.save(lichSuHoaDon);
     }
 
     @Override
-    public LichSuHoaDon update(Long id, LichSuHoaDon lichSuHoaDon) {
-        LichSuHoaDon lichSuHoaDon1 = this.getOne(id);
+    public LichSuHoaDon update(Long id, LichSuHoaDonRequest request) {
 
-        lichSuHoaDon1.setTrangThai(lichSuHoaDon.getTrangThai());
-        lichSuHoaDon1.setGhiChu(lichSuHoaDon.getGhiChu());
-        lichSuHoaDon1.setHoaDon(lichSuHoaDon.getHoaDon());
-
-        return repository.save(lichSuHoaDon1);
+        LichSuHoaDon entit = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("X Không tìm thấy Lịch sử Hóa đơn với ID: " + id));
+        return repository.save(converter.convertRequestToEntity(entit, request));
     }
 
     @Override
     public LichSuHoaDon delete(Long id) {
-        Optional<LichSuHoaDon> lichSuHoaDon = repository.findById(id);
-        if(lichSuHoaDon.isEmpty()){
-            throw new EntityNotFoundException("Không tìm thấy lịch sử hóa đơn có ID: " + id);
-        }
-        repository.deleteById(id);
-
-        return lichSuHoaDon.get();
+        LichSuHoaDon lichSuHoaDon = repository.findById(id).get();
+        lichSuHoaDon.setDeleted(!lichSuHoaDon.getDeleted());
+        return repository.save(lichSuHoaDon);
     }
 }
