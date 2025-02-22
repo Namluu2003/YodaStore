@@ -24,6 +24,17 @@ public class AccountConvert {
                 .birthday(request.getBirthday())
                 .build();
     }
-
+    public Account convertRequestToEntity(Long id,AccountRequest request){
+        Account account = accountRepository.findById(id).get();
+        account.setPassword(request.getPassword() == null ? account.getPassword() : request.getPassword());
+        account.setBirthday(request.getBirthday());
+        account.setEmail(request.getEmail());
+        account.setName(request.getName());
+        account.setCccd(request.getCccd());
+        account.setUsername(request.getUsername());
+        account.setPhoneNumber(request.getPhoneNumber());
+        account.setGender(request.getGender());
+        return account;
+    }
 }
 

@@ -82,6 +82,27 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account update(Long id, AccountRequest request) {
+        Account old = accountRepository.findById(id).get();
+        if (accountRepository.existsByUsernameAndUsernameNot(request.getUsername(), old.getUsername()))
+            throw new NgoaiLe("Username đã tồn tại!");
+        if (accountRepository.existsByEmailAndEmailNot(request.getEmail(), old.getEmail()))
+            throw new NgoaiLe("Email đã tồn tại!");
+        if (accountRepository.existsByPhoneNumberAndPhoneNumberNot(request.getPhoneNumber(), old.getPhoneNumber()))
+            throw new NgoaiLe("SDT đã tồn tại!");
+        if (accountRepository.existsByCccdAndCccdNot(request.getCccd(), old.getCccd()))
+            throw new NgoaiLe("Mã định danh đã tồn tại!");
+        Account accountSave = accountRepository.save(accountConvert.convertRequestToEntity(id, request));
+        if (accountSave != null) {
+            if (request.getAvatar() != null) {
+                accountSave.setAvatar(String.valueOf(cloudinaryUtils.uploadSingleImage(request.getAvatar(), "account")));
+                accountRepository.save(accountSave);
+            }
+        }
+        return accountSave;
+    }
+
+    @Override
     public Account delete(Long id) {
         return null;
     }
