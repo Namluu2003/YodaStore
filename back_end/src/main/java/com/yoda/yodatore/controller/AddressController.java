@@ -33,5 +33,4 @@ public class AddressController {
     public ResponseObject delete(@PathVariable Long id) {
         return new ResponseObject(addressService.delete(id));
     }
-
 }

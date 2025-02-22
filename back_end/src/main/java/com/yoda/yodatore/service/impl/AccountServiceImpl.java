@@ -29,10 +29,8 @@ public class AccountServiceImpl implements AccountService {
     private AddressRepository addressRepository;
     @Autowired
     private AccountConvert accountConvert;
-
     @Autowired
     private AddressConvert addressConvert;
-
     @Autowired
     private MailUtils mailUtils;
     @Autowired
@@ -49,8 +47,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.getOne(id, roleName);
     }
 
-
-
     @Override
     @Transactional
     public Account create(AccountRequest request, String roleName) {
@@ -61,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
         if (accountRepository.existsByPhoneNumberAndPhoneNumberNot(request.getPhoneNumber(), ""))
             throw new NgoaiLe("SDT đã tồn tại!");
         if (accountRepository.existsByCccdAndCccdNot(request.getCccd(), ""))
-            throw new NgoaiLe("CCD đã tồn tại!");
+            throw new NgoaiLe("Mã định danh đã tồn tại!");
 
         String randomPassword = GenCode.randomPassword();
         Account account = accountConvert.convertRequestToEntity(request);

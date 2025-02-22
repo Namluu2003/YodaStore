@@ -9,8 +9,10 @@ public interface AccountService {
     PhanTrang<AccountResponse> getAll(AccountRequest request);
 
     Account getOne(Long id, String roleName);
+
     Account create(AccountRequest request, String roleName);
+
     Account update(Long id, AccountRequest request);
+
     Account delete(Long id);
-  
 }
