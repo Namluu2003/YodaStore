@@ -22,6 +22,13 @@ public class CustomerController {
         request.setRoleName(ROLE);
         return accountService.getAll(request);
     }
-
+    @GetMapping("/{id}")
+    public Account getOne(@PathVariable Long id) {
+        return accountService.getOne(id, ROLE);
+    }
+    @PostMapping
+    public ResponseObject create(@ModelAttribute @Valid AccountRequest request) {
+        return new ResponseObject(accountService.create(request, ROLE));
+    }
 
 }

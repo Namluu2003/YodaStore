@@ -5,6 +5,7 @@ import com.yoda.yodatore.entity.Address;
 import com.yoda.yodatore.infrastructure.common.GenCode;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.converter.AccountConvert;
+import com.yoda.yodatore.infrastructure.converter.AddressConvert;
 import com.yoda.yodatore.infrastructure.exception.NgoaiLe;
 import com.yoda.yodatore.infrastructure.request.AccountRequest;
 import com.yoda.yodatore.infrastructure.response.AccountResponse;
@@ -30,6 +31,9 @@ public class AccountServiceImpl implements AccountService {
     private AccountConvert accountConvert;
 
     @Autowired
+    private AddressConvert addressConvert;
+
+    @Autowired
     private MailUtils mailUtils;
     @Autowired
     private CloudinaryUtils cloudinaryUtils;
@@ -46,6 +50,38 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
+
+    @Override
+    @Transactional
+    public Account create(AccountRequest request, String roleName) {
+        if (accountRepository.existsByUsernameAndUsernameNot(request.getUsername(), ""))
+            throw new NgoaiLe("Username đã tồn tại!");
+        if (accountRepository.existsByEmailAndEmailNot(request.getEmail(), ""))
+            throw new NgoaiLe("Email đã tồn tại!");
+        if (accountRepository.existsByPhoneNumberAndPhoneNumberNot(request.getPhoneNumber(), ""))
+            throw new NgoaiLe("SDT đã tồn tại!");
+        if (accountRepository.existsByCccdAndCccdNot(request.getCccd(), ""))
+            throw new NgoaiLe("CCD đã tồn tại!");
+
+        String randomPassword = GenCode.randomPassword();
+        Account account = accountConvert.convertRequestToEntity(request);
+        account.setRole(roleRepository.findByName(roleName));
+        account.setPassword(randomPassword);
+        account.setAvatar("defaultAvatar.jpg");
+        Account accountSave = accountRepository.save(account);
+        if (accountSave != null) {
+            Address address = addressConvert.convertRequestToEntity(request.getAddress());
+            address.setAccount(accountSave);
+            addressRepository.save(address);
+            if (request.getAvatar() != null)
+                accountSave.setAvatar(String.valueOf(cloudinaryUtils.uploadSingleImage(request.getAvatar(), "account")));
+            String emailContent = "Chào " + accountSave.getEmail() + "\n" + "Bạn vừa dùng email này để đăng ký tài khoản \n" + "Tài khoản của bạn là: " + accountSave.getUsername() + "\n" + "Mật khẩu đăng nhập là: " + accountSave.getPassword() + "\n\n" + "Đây là email tự động, vui lòng không trả lời email này.\nCảm ơn.\n\n" ;
+            mailUtils.sendEmail(accountSave.getEmail(), "Thư xác thực tài khoản", emailContent);
+        }
+        return accountSave;
+    }
+
+    @Override
     public Account delete(Long id) {
         return null;
     }
