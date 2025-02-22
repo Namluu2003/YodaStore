@@ -23,5 +23,15 @@ public class AddressController {
         return new ResponseObject(addressService.create(request));
     }
 
+    @PutMapping("/{id}")
+    public ResponseObject update(@PathVariable Long id,
+                                 @RequestBody AddressRequest request) {
+        return new ResponseObject(addressService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseObject delete(@PathVariable Long id) {
+        return new ResponseObject(addressService.delete(id));
+    }
 
 }

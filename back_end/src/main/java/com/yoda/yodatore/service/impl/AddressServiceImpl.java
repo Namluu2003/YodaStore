@@ -30,4 +30,29 @@ public class AddressServiceImpl implements AddressService {
     public Address create(AddressRequest request) {
         return addressRepository.save(addressConvert.convertRequestToEntity(request));
     }
+
+    @Override
+    public Address update(Long idAddress, AddressRequest request) {
+        Address addressUpdate = addressConvert.convertRequestToEntity(idAddress, request);
+        if (request.getDefaultAddress()) {
+            Address addressDefault = addressRepository.findByAccountIdAndDefaultAddress(addressUpdate.getAccount().getId(), true);
+            if (addressDefault != null) {
+                addressDefault.setDefaultAddress(false);
+                addressRepository.save(addressDefault);
+            }
+        }
+        return addressRepository.save(addressUpdate);
+    }
+
+    @Override
+    public Address delete(Long idAddress) {
+        Address address = addressRepository.findById(idAddress).get();
+
+        if (addressRepository.findByAccountIdAndDeleted(address.getAccount().getId(), false).size() > 1) {
+            address.setDeleted(true);
+            return addressRepository.save(address);
+        } else {
+            throw new NgoaiLe("Không thể xóa địa chỉ này!");
+        }
+    }
 }

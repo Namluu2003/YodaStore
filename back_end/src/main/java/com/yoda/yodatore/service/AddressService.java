@@ -9,4 +9,8 @@ public interface AddressService {
     Page<AddressResponse> getByAccount(AddressRequest request);
 
     Address create(AddressRequest request);
+
+    Address update(Long idAddress, AddressRequest request);
+
+    Address delete(Long idAddress);
 }
