@@ -8,5 +8,5 @@ import org.springframework.data.domain.Page;
 public interface AddressService {
     Page<AddressResponse> getByAccount(AddressRequest request);
 
-   
+    Address create(AddressRequest request);
 }

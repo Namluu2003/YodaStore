@@ -26,5 +26,8 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.getAddress(request, pageable);
     }
 
-
+    @Override
+    public Address create(AddressRequest request) {
+        return addressRepository.save(addressConvert.convertRequestToEntity(request));
+    }
 }
