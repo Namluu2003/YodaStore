@@ -38,6 +38,7 @@ public class BaseEntity {
         updateAt = LocalDateTime.now();
         createBy = "Luu Van Nam";
         updateBy = "Luu Van Nam";
+        deleted = false;
 
     }
     @PreUpdate
