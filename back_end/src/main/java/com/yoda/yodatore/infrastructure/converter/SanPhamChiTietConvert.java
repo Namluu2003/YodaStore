@@ -29,11 +29,11 @@ public class SanPhamChiTietConvert {
         SanPham sanPham = sanPhamRepository.findById(request.getShoe()).get();
         MauSac mauSac = mauSacRepository.findById(request.getColor()).get();
         KichThuoc kichThuoc = kichThuocRepository.findById(request.getSize()).get();
-        De de = deRepository.findById(request.getSole()).get();
+
         return SanPhamChiTiet.builder()
-                .shoe(sanPham).color(mauSac).size(kichThuoc).sole(de)
+                .shoe(sanPham).color(mauSac).size(kichThuoc)
                 .code(GenCode.genCodeByName(sanPham.getName()
-                        + mauSac.getName() + kichThuoc.getName() + de.getName()))
+                        + mauSac.getName() + kichThuoc.getName()))
                 .price(request.getPrice()).quantity(request.getQuantity())
                 .weight(request.getWeight())
                 .build();
@@ -43,13 +43,13 @@ public class SanPhamChiTietConvert {
         SanPham sanPham = sanPhamRepository.findById(request.getShoe()).get();
         MauSac mauSac = mauSacRepository.findById(request.getColor()).get();
         KichThuoc kichThuoc = kichThuocRepository.findById(request.getSize()).get();
-        De de = deRepository.findById(request.getSole()).get();
+
 
         entity.setShoe(sanPham);
         entity.setColor(mauSac);
         entity.setSize(kichThuoc);
         entity.setCode(GenCode.genCodeByName(sanPham.getName()
-                + mauSac.getName() + kichThuoc.getName() + de.getName()));
+                + mauSac.getName() + kichThuoc.getName()));
         entity.setPrice(request.getPrice());
         entity.setQuantity(request.getQuantity());
         entity.setWeight(request.getWeight());

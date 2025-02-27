@@ -40,10 +40,7 @@ public class SanPhamChiTiet extends PrimaryEnity {
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
     private KichThuoc size;
 
-    @ManyToOne
-    @JoinColumn(name = "de_id")
-    @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
-    private De sole;
+
 
     @ManyToOne
     @JoinColumn(name = "mau_sac_id")

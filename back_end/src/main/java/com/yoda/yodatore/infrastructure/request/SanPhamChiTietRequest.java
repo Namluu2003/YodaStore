@@ -21,8 +21,7 @@ public class SanPhamChiTietRequest extends PageableRequest{
     private Long color;
     @NotNull(message = "Vui lòng chọn kích cỡ!")
     private Long size;
-    @NotNull(message = "Vui lòng chọn loại đế!")
-    private Long sole;
+
     @NotNull(message = "Số lượng không được để trống!")
     private Integer quantity;
     @NotNull(message = "Đơn giá không được để trống!")

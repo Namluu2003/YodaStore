@@ -19,5 +19,7 @@ public class SanPhamRequest extends PageableRequest {
     private Long brand;
     @NotNull(message = "Danh mục không được để trống.")
     private Long category;
+    @NotNull(message = "Vui lòng chọn loại đế!")
+    private Long sole;
     private Boolean status;
 }

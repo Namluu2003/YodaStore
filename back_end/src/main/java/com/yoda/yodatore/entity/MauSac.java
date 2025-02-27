@@ -24,7 +24,4 @@ public class MauSac extends PrimaryEnity {
     @Column(name = "name")
     @NotNull(message = "Tên không được để trống")
     private String name;
-
-    @Column(name = "status")
-    private Boolean status;
 }

@@ -38,17 +38,17 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.save(sanPham);
     }
     public SanPham update(Long id, SanPhamRequest request) {
-    SanPham name = sanPhamRepository.findById(id).get();
-    if (sanPhamRepository.existsByNameIgnoreCase(request.getName())) {
-        if (name.getName().equals(request.getName())) {
+        SanPham name = sanPhamRepository.findById(id).get();
+        if (sanPhamRepository.existsByNameIgnoreCase(request.getName())) {
+            if (name.getName().equals(request.getName())) {
+                return sanPhamRepository.save(sanPhamConvert.convertRequestToEntity(name, request));
+            }
+            throw new NgoaiLe(request.getName() + " đã tồn tại!");
+        } else {
             return sanPhamRepository.save(sanPhamConvert.convertRequestToEntity(name, request));
         }
-        throw new NgoaiLe(request.getName() + " đã tồn tại!");
-    } else {
-        return sanPhamRepository.save(sanPhamConvert.convertRequestToEntity(name, request));
     }
-}
-//    public SanPham delete(Long id) {
+    //    public SanPham delete(Long id) {
 //        return null;
 //    }
     public SanPham delete(Long id) {
