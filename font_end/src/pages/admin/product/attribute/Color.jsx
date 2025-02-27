@@ -140,6 +140,32 @@ import {
       },
     ];
     
+    const showDeleteConfirm = (item) => {
+      confirm({
+        title: "Xác nhận ",
+        icon: <ExclamationCircleFilled />,
+        content: "Bạn có chắc muốn sửa trạng thái hoạt động? ",
+        okText: "OK",
+        okType: "danger",
+        cancelText: "Đóng",
+        onOk() {
+          request
+            .remove(`/color/${item.id}`)
+            .then((response) => {
+              if (response.status === 200) {
+                loadData(currentPage, pageSize, searchValue, statusColor);
+                toast.success("Thành công!");
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    };
     
   
     
