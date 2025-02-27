@@ -19,8 +19,9 @@ import {
   import { WarningTwoTone } from "@ant-design/icons";
   import { toast } from "react-toastify";
   import moment from "moment";
-  
+
   import "./Color.css";
+
   function Color() {
     const [colorList, setColorList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -80,7 +81,64 @@ import {
         });
     };
   
-   
+    const columns = [
+      {
+        title: "STT",
+        dataIndex: "index",
+        key: "index",
+        className: "text-center custom-index",
+      },
+      {
+        title: "Màu sắc",
+        dataIndex: "name",
+        key: "name",
+        className: "text-center custom-name",
+      },
+      {
+        title: "Ngày tạo",
+        dataIndex: "createAt",
+        key: "createAt",
+        className: "text-center custom-date",
+        render: (text) => moment(text).format("DD-MM-YYYY"),
+      },
+      {
+            title: "Hoạt động",
+            dataIndex: "status",
+            key: "status",
+            className: "text-center",
+            render: (x, item) => (
+              <Switch
+                className={x ? "bg-success" : "bg-danger"}
+                checkedChildren={<i class="fa-solid fa-check"></i>}
+                unCheckedChildren={<i class="fa-solid fa-xmark"></i>}
+                checked={!x}
+                onChange={() => showDeleteConfirm(item)}
+              />
+            ),
+          },
+      {
+        title: "Thao tác",
+        dataIndex: "id",
+        key: "action",
+        className: "text-center custom-action",
+        render: (x, item) => (
+          <>
+            <Link to={"/admin/color"}>
+              <button
+                type="primary"
+                onClick={() => {
+                  setItem(item);
+                  showModalUpdate(x);
+                }}
+                className="btn btn-sm text-primary"
+              >
+                <i className="fas fa-edit"></i>
+              </button>
+            </Link>
+          </>
+        ),
+      },
+    ];
     
     
   
