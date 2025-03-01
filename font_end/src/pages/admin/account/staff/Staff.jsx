@@ -29,7 +29,9 @@ function Staff() {
     })
   }, [searchValue, pageSize, staffStatus, currentPage]);
 
-// const handleUpdateStatus = (staff) => {
+
+
+  // const handleUpdateStatus = (staff) => {
   //   Modal.confirm({
   //     title: "Xác nhận",
   //     maskClosable: true,
@@ -132,7 +134,17 @@ function Staff() {
             placeholder="Tìm kiếm nhân viên theo tên, email, sdt ..."
           />
         </Col>
-      
+        {/* <Col span={10}>
+          <div className="mb-1">Trạng thái</div>
+          <Radio.Group
+            defaultValue={null}
+            onChange={(event) => setStaffStatus(event.target.value)}
+          >
+            <Radio value={null}>Tất cả</Radio>
+            <Radio value={false}>Đang làm</Radio>
+            <Radio value={true}>Đã nghỉ</Radio>
+          </Radio.Group>
+        </Col> */}
         <Col span={4}>
           <div className="mb-1">‍</div>
           <Link to={"/admin/staff/add"}>
@@ -142,11 +154,24 @@ function Staff() {
           </Link>
         </Col>
       </Row>
-      
+      <Table 
+        dataSource={staffList} 
+        columns={columns} 
+        className="mt-3"
+        pagination={{
+          // showSizeChanger: true,
+          current: currentPage,
+          pageSize: pageSize,
+          // pageSizeOptions: [5, 10, 20, 50, 100],
+          // showQuickJumper: true,
+          total: totalPages * pageSize,
+          onChange: (page, pageSize) => {
+            setCurrentPage(page);
+            setPageSize(pageSize);
+          },
+        }} />
     </BaseUI>
   );
-
-
 }
 
 export default Staff;
