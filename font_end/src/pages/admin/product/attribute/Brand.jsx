@@ -201,7 +201,162 @@ import {
           },
         });
       };
-  
+
+      const handleUpdate = (data) => {
+        confirm({
+          title: "Xác nhận ",
+          icon: <ExclamationCircleFilled />,
+          content: "Bạn có chắc muốn cập nhật màu sắc? ",
+          okText: "OK",
+          okType: "danger",
+          cancelText: "Đóng",
+          onOk() {
+            request
+              .put(`/color/${item.id}`, { ...data, status: item.status }) // Cập nhật trạng thái
+              .then((response) => {
+                if (response.status === 200) {
+                  toast.success("Cập nhật thành công!");
+                  setIsModalUpdateOpen(false);
+                  loadData(currentPage, pageSize, searchValue, statusColor);
+                  formUpdate.resetFields();
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+                if (e.response.status === 500) {
+                  toast.error(e.response.data);
+                }
+                toast.error(e.response.data.message);
+              });
+          },
+          onCancel() {
+            console.log("Cancel");
+          },
+        });
+      };
+      return (
+        <BaseUI>
+          <h6 className="fw-semibold">Danh sách màu sắc</h6>
+    
+          <div className="card p-3 mb-3">
+            <h6 className="fw-semibold">Bộ lọc</h6>
+            <Row gutter={10}>
+              <Col span={15}>
+                <label className="mb-1">Màu sắc</label>
+                <Input
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  placeholder="Tìm kiếm màu sắc theo tên..."
+                />
+              </Col>
+              {/* <Col span={8}>
+                <div className="mb-1">Trạng thái</div>
+                <Radio.Group
+                  defaultValue={null}
+                  onChange={(event) => setStatusColor(event.target.value)}
+                >
+                  <Radio value={null}>Tất cả</Radio>
+                  <Radio value={false}>Hoạt động</Radio>
+                  <Radio value={true}>Ngừng hoạt động</Radio>
+                </Radio.Group>
+              </Col> */}
+            </Row>
+          </div>
+          <div className="card p-3">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <h6 className="fw-semibold">Bảng sản phẩm</h6>
+              <Link to={"/admin/color"}>
+                <Button
+                  type="primary"
+                  onClick={showModalAdd}
+                  className="bg-primary w-100"
+                >
+                  <i className="fas fa-plus-circle me-1"></i>Thêm màu sắc
+                </Button>
+              </Link>
+            </div>
+    
+            <Table
+              dataSource={colorList}
+              columns={columns}
+              className="mt-3"
+              pagination={{
+                // showSizeChanger: true,
+                current: currentPage,
+                pageSize: pageSize,
+                // pageSizeOptions: [5, 10, 20, 50, 100],
+                // showQuickJumper: true,
+                total: totalPages * pageSize,
+                onChange: (page, pageSize) => {
+                  setCurrentPage(page);
+                  setPageSize(pageSize);
+                },
+              }}
+              bordered
+            />
+    
+            <Modal
+              title="Thêm màu sắc"
+              open={isModalAddOpen}
+              onCancel={handleCancelAdd}
+              footer=""
+            >
+              <Form onFinish={handleAdd} layout="vertical" form={formAdd}>
+                <Form.Item
+                  label={"Màu sắc"}
+                  name={"name"}
+                  rules={[
+                    { required: true, message: "Màu sắc không được để trống!" },
+                  ]}
+                >
+                  <Input placeholder="Nhập tên màu..." />
+                </Form.Item>
+    
+                <div className="d-flex justify-content-end">
+                  <Button type="primary" htmlType="submit">
+                    <i className="fas fa-plus-circle me-1"></i> Thêm
+                  </Button>
+                </div>
+              </Form>
+            </Modal>
+    
+            <Modal
+              title="Chỉnh sửa màu sắc"
+              open={isModalUpdateOpen}
+              onCancel={handleCancelUpdate}
+              footer=""
+            >
+              <Form onFinish={handleUpdate} layout="vertical" form={formUpdate}>
+                <Form.Item
+                  label={"Màu sắc"}
+                  name={"name"}
+                  rules={[
+                    { required: true, message: "Màu sắc không được để trống!" },
+                  ]}
+                >
+                  <Input placeholder="Nhập tên màu..." />
+                </Form.Item>
+                <Form.Item label={"Trạng thái"} name={"status"}>
+                  <Switch
+                    className={item.status ? "bg-success" : "bg-danger"} // True => Xanh, False => Đỏ
+                    checkedChildren={<i className="fa-solid fa-check"></i>}
+                    unCheckedChildren={<i className="fa-solid fa-xmark"></i>}
+                    checked={item.status} // Sử dụng trạng thái của item
+                    onChange={(checked) => {
+                      setItem({ ...item, status: checked }); // Cập nhật trạng thái trong item
+                    }}
+                  />
+                </Form.Item>
+    
+                <div className="d-flex justify-content-end">
+                  <Button type="primary" htmlType="submit">
+                    <i className="fas fa-plus-circle me-1"></i> Cập nhật
+                  </Button>
+                </div>
+              </Form>
+            </Modal>
+          </div>
+        </BaseUI>
+      );
     
   }
   
