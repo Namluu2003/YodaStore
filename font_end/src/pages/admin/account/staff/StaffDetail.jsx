@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaHome, FaTrash } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import AddressStaffDetail from "~/components/Admin/Account/Staff/AddressStaffDetail";
 import Loading from "~/components/Loading/Loading";
 import BaseUI from "~/layouts/admin/BaseUI";
 import * as request from "~/utils/httpRequest";
@@ -157,7 +157,11 @@ function StaffDetail() {
               </Form.Item>
             </Form>
           </Col>
-          
+          <Col span={16}>
+            <h6>Thông tin địa chỉ</h6>
+            <Divider />
+            <AddressStaffDetail idStaff={id} />
+          </Col>
         </Row>
       </BaseUI>
     </>
