@@ -121,6 +121,31 @@ function Staff() {
     },
   ];
 
+  return (
+    <BaseUI>
+      <h6>Danh sách nhân viên</h6>
+      <Row gutter={10}>
+        <Col span={10}>
+          <label className="mb-1">Nhập tên, email, số điện thoại</label>
+          <Input
+            onChange={(event) => setSearchValue(event.target.value)}
+            placeholder="Tìm kiếm nhân viên theo tên, email, sdt ..."
+          />
+        </Col>
+      
+        <Col span={4}>
+          <div className="mb-1">‍</div>
+          <Link to={"/admin/staff/add"}>
+            <Button type="primary" className="bg-primary">
+              <i className="fas fa-plus-circle me-1"></i>Thêm nhân viên
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      
+    </BaseUI>
+  );
+
 
 }
 
