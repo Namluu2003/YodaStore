@@ -53,6 +53,44 @@ function StaffDetail() {
     setLoading(false);
   }
 
+  const handleUpdate = (data) => {
+    const formData = new FormData();
+    if (avatar !== null) {
+      formData.append("avatar", avatar);
+    }
+    formData.append("cccd", data.cccd);
+    formData.append("username", data.username);
+    formData.append("name", data.name);
+    formData.append("gender", data.gender);
+    formData.append("birthday", data.birthday);
+    formData.append("email", data.email);
+    formData.append("phoneNumber", data.phoneNumber);
+    Modal.confirm({
+      title: "Xác nhận",
+      maskClosable: true,
+      content: "Xác nhận cập nhật nhân viên ?",
+      okText: "Ok",
+      cancelText: "Cancel",
+      onOk: () => {
+        setLoading(true);
+        request.put(`/staff/${id}`, formData, { headers: { "Content-Type": "multipart/form-data", }, }).then((response) => {
+          console.log(response);
+          setLoading(true);
+          if (response.data.success) {
+            toast.success("Cập nhật thành công!");
+            setAvatar(null);
+            setPreviewUrl(null);
+            loadStaff(form,id);
+          }
+        }).catch((e) => {
+          console.log(e);
+          toast.error(e.response.data);
+          setLoading(false);
+        });
+      },
+    });
+  }
+
 
   if (loading) {
     return (
