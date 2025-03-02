@@ -5,6 +5,7 @@ import com.yoda.yodatore.entity.SanPham;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.converter.SanPhamChiTietConvert;
 import com.yoda.yodatore.infrastructure.exception.NgoaiLe;
+import com.yoda.yodatore.infrastructure.request.FindShoeDetailRequest;
 import com.yoda.yodatore.infrastructure.request.SanPhamChiTietRequest;
 import com.yoda.yodatore.infrastructure.response.SanPhamChiTietReponse;
 import com.yoda.yodatore.repository.AnhRepository;
@@ -20,8 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
@@ -34,9 +38,20 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     @Autowired
     private SanPhamChiTietRepository sanPhamChiTietRepository;
 
-    public PhanTrang<SanPhamChiTietReponse> getAll(SanPhamChiTietRequest request) {
+    public PhanTrang<SanPhamChiTietReponse> getAll(FindShoeDetailRequest request) {
         Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSizePage());
-        return new PhanTrang<>(sanPhamChiTietRepository.getAll(request, pageable));
+        FindShoeDetailRequest customRequest = FindShoeDetailRequest.builder()
+                .colors(request.getColor() != null ? Arrays.asList(request.getColor().split(",")) : null)
+                .shoes(request.getShoe() != null ? Arrays.asList(request.getShoe().split(",")) : null)
+                .sizes(request.getSize() != null ? Arrays.asList(request.getSize().split(",")) : null)
+                .soles(request.getSole() != null ? Arrays.asList(request.getSole().split(",")) : null)
+                .size(request.getSize())
+                .color(request.getColor())
+                .shoe(request.getShoe())
+                .sole(request.getSole())
+                .name(request.getName())
+                .build();
+        return new PhanTrang<>(sanPhamChiTietRepository.getAll(customRequest, pageable));
     }
 
 
@@ -58,7 +73,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 SanPham sanPham = sanPhamChiTietsave.getShoe();
                 sanPham.setUpdateAt(LocalDateTime.now());
                 sanPhamRepository.save(sanPham);
-                if(request.getListImages().size()>=3)
+                if(request.getListImages().size()>3)
                     throw new NgoaiLe("Chỉ được thêm tối đa 3 hình ảnh!");
                 if (sanPhamChiTietsave != null) {
                     for (String x : request.getListImages()) {
@@ -90,6 +105,13 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return sanPhamChiTietRepository.save(sanPhamChiTietConvert.convertRequestToEntity(old, request));
     }
 
+    public SanPhamChiTietReponse getOneShoeDetail(Long id) {
+        return sanPhamChiTietRepository.getOneShoeDetail(id);
+    }
+
+    public Map<String, BigDecimal> findMinAndMaxPrice() {
+        return sanPhamChiTietRepository.findMinAndMaxPrice();
+    }
 
     public SanPhamChiTiet delete(Long id) {
         return null;

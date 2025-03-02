@@ -4,11 +4,14 @@ import com.yoda.yodatore.entity.SanPham;
 import com.yoda.yodatore.infrastructure.common.PhanTrang;
 import com.yoda.yodatore.infrastructure.common.ResponseObject;
 import com.yoda.yodatore.infrastructure.request.SanPhamRequest;
+import com.yoda.yodatore.infrastructure.response.SanPhamKhuyenMaiRespone;
 import com.yoda.yodatore.infrastructure.response.SanPhamResponse;
 import com.yoda.yodatore.service.SanPhamService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/shoe")
@@ -22,6 +25,11 @@ public class SanPhamController {
         return sanPhamService.getAll(request);
     }
 
+
+    @GetMapping("/shoe-promotion")
+    public List<SanPhamKhuyenMaiRespone> getTest(@RequestParam(required = false) Long promotion){
+        return sanPhamService.getAllShoeInPromotion(promotion);
+    }
     @GetMapping("/{id}")
     public SanPham getOne(@PathVariable Long id) {
         return sanPhamService.getOne(id);

@@ -19,6 +19,11 @@ public class Images extends PrimaryEnity {
     @JoinColumn(name = "san_pham_chi_tiet_id")
     @JsonIgnore
     private SanPhamChiTiet sanPhamChiTiet;
+
+    @ManyToOne
+    @JoinColumn(name = "san_pham_id")
+    @JsonIgnore
+    private SanPham sanPham;
     @Nationalized
     @Column(name = "name")
     private String name;

@@ -1,31 +1,28 @@
 package com.yoda.yodatore.infrastructure.response;
 
+import com.yoda.yodatore.entity.BillDetail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
-import com.yoda.yodatore.entity.SanPhamChiTiet;
+
 import java.math.BigDecimal;
-@Projection(types = {SanPhamChiTiet.class})
-public interface SanPhamChiTietReponse {
-    Long getId();
+
+@Projection(types = {BillDetail.class})
+public interface BillDetailResponse {
     @Value("#{target.indexs}")
     Integer getIndex();
 
-    String getCode();
+    Long getId();
+
     String getName();
-
-
+    String getShoeCode();
 
     String getColor();
 
     String getSize();
-
-    Integer getQuantity();
+    String getSole();
 
     BigDecimal getPrice();
 
-    Double getWeight();
-
+    Integer getQuantity();
     String getImages();
-    Boolean getStatus();
-
 }

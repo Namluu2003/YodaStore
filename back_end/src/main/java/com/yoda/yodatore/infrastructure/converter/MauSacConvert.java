@@ -11,14 +11,12 @@ public class MauSacConvert {
     public MauSac addconvertRequest(MauSacRequest request){
         MauSac mauSac = MauSac.builder()
                 .name(request.getName())
-                .status(request.getStatus())
                 .build();
         return mauSac;
     }
 
     public MauSac convertRequestToEntity(MauSac entity, MauSacRequest request){
         entity.setName(request.getName());
-        entity.setStatus(request.getStatus());
         return entity;
     }
 }

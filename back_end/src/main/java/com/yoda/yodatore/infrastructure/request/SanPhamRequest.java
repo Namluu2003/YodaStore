@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -21,5 +23,8 @@ public class SanPhamRequest extends PageableRequest {
     private Long category;
     @NotNull(message = "Vui lòng chọn loại đế!")
     private Long sole;
+    @NotEmpty(message = "Hình ảnh không được để trống!")
+    private List<String> listImages;
+
     private Boolean status;
 }
