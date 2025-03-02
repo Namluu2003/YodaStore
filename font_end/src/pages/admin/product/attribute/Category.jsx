@@ -164,7 +164,41 @@ import {
         },
       });
     };
-    
+    const handleAdd = (data) => {
+      confirm({
+        title: "Xác nhận ",
+        icon: (
+          <WarningTwoTone twoToneColor="#fa541c" style={{ fontSize: "26px" }} />
+        ),
+        content: "Bạn có chắc muốn thêm màu mới? ",
+        okText: "OK",
+        okType: "danger",
+        cancelText: "Đóng",
+        onOk() {
+          request
+            .post("/color", { ...data, status: true })
+            .then((response) => {
+              if (response.status === 200) {
+                console.log(response);
+                toast.success("Thêm mới thành công!");
+                setIsModalAddOpen(false);
+                loadData();
+                formAdd.resetFields();
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+              if (e.response.status === 500) {
+                toast.error(e.response.data);
+              }
+              toast.error(e.response.data.message);
+            });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    };
   }
   
   export default Color;
