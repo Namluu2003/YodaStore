@@ -113,7 +113,19 @@ function Customer() {
         </Col>
       </Row>
 
-      
+      <Table dataSource={customerList} columns={columns} className="mt-3"
+        pagination={{
+          // showSizeChanger: true,
+          current: currentPage,
+          pageSize: pageSize,
+          // pageSizeOptions: [5, 10, 20, 50, 100],
+          // showQuickJumper: true,
+          total: totalPages * pageSize,
+          onChange: (page, pageSize) => {
+            setCurrentPage(page);
+            setPageSize(pageSize);
+          },
+        }} />
     </BaseUI>
   );
 }
