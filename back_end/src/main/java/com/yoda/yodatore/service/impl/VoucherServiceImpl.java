@@ -231,7 +231,7 @@ public class VoucherServiceImpl implements VoucherService {
 
 
     }
-    
+
     public void updateStatus(Voucher voucher) {
         LocalDateTime currentDate = LocalDateTime.now();
         LocalDateTime startDate = voucher.getStartDate();
@@ -247,7 +247,6 @@ public class VoucherServiceImpl implements VoucherService {
         }
         voucherRepository.save(voucher);
     }
-
 
     public void createScheduledVoucher() {
         // Lấy ngày hiện tại
