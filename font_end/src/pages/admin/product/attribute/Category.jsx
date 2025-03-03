@@ -199,6 +199,38 @@ import {
         },
       });
     };
+    const handleUpdate = (data) => {
+      confirm({
+        title: "Xác nhận ",
+        icon: <ExclamationCircleFilled />,
+        content: "Bạn có chắc muốn cập nhật màu sắc? ",
+        okText: "OK",
+        okType: "danger",
+        cancelText: "Đóng",
+        onOk() {
+          request
+            .put(`/color/${item.id}`, { ...data, status: item.status }) // Cập nhật trạng thái
+            .then((response) => {
+              if (response.status === 200) {
+                toast.success("Cập nhật thành công!");
+                setIsModalUpdateOpen(false);
+                loadData(currentPage, pageSize, searchValue, statusColor);
+                formUpdate.resetFields();
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+              if (e.response.status === 500) {
+                toast.error(e.response.data);
+              }
+              toast.error(e.response.data.message);
+            });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    };
   }
   
   export default Color;
