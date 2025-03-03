@@ -316,7 +316,41 @@ import {
             </Form>
           </Modal>
   
-          
+          <Modal
+            title="Chỉnh sửa màu sắc"
+            open={isModalUpdateOpen}
+            onCancel={handleCancelUpdate}
+            footer=""
+          >
+            <Form onFinish={handleUpdate} layout="vertical" form={formUpdate}>
+              <Form.Item
+                label={"Màu sắc"}
+                name={"name"}
+                rules={[
+                  { required: true, message: "Màu sắc không được để trống!" },
+                ]}
+              >
+                <Input placeholder="Nhập tên màu..." />
+              </Form.Item>
+              <Form.Item label={"Trạng thái"} name={"status"}>
+                <Switch
+                  className={item.status ? "bg-success" : "bg-danger"} // True => Xanh, False => Đỏ
+                  checkedChildren={<i className="fa-solid fa-check"></i>}
+                  unCheckedChildren={<i className="fa-solid fa-xmark"></i>}
+                  checked={item.status} // Sử dụng trạng thái của item
+                  onChange={(checked) => {
+                    setItem({ ...item, status: checked }); // Cập nhật trạng thái trong item
+                  }}
+                />
+              </Form.Item>
+  
+              <div className="d-flex justify-content-end">
+                <Button type="primary" htmlType="submit">
+                  <i className="fas fa-plus-circle me-1"></i> Cập nhật
+                </Button>
+              </div>
+            </Form>
+          </Modal>
         </div>
       </BaseUI>
     );
