@@ -8,6 +8,7 @@ import com.yoda.yodatore.infrastructure.response.VoucherResponse;
 public interface VoucherService {
 
     PhanTrang<VoucherResponse> getAll(VoucherRequest request);
+
     Voucher getOne(Long id);
 
     Voucher add(VoucherRequest voucher);
