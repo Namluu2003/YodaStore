@@ -2,6 +2,7 @@ package com.yoda.yodatore.repository;
 
 import com.yoda.yodatore.entity.AccountVoucher;
 import com.yoda.yodatore.infrastructure.request.AccountVoucherRequest;
+import com.yoda.yodatore.infrastructure.response.AccountVoucherResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,7 +32,7 @@ public interface AccountVoucherRepository extends JpaRepository<AccountVoucher, 
             AND (:#{#req.voucherId} IS NULL OR av.voucher.id = :#{#req.voucherId})
             AND (:#{#req.deleted} IS NULL OR av.deleted = :#{#req.deleted})
             """)
-    Page<AccountVoucher> searchAccountVouchers(
+    Page<AccountVoucherResponse> getAll(
             @Param("req") AccountVoucherRequest req,
             Pageable pageable
     );

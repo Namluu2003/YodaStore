@@ -193,8 +193,6 @@ public class VoucherServiceImpl implements VoucherService {
         return voucherSave;
     }
 
-
-
     public String delete(Long id) {
         voucherRepository.deleteById(id);
         return "Xóa oke";
@@ -202,13 +200,9 @@ public class VoucherServiceImpl implements VoucherService {
 
     }
 
-
     public boolean isVoucherCodeExists(String code) {
         return voucherRepository.existsByCode(code);
     }
-
-
-
 
     public void updateStatus() {
         LocalDateTime currentDateTime = LocalDateTime.now();
