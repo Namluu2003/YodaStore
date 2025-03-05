@@ -5,13 +5,12 @@ import BaseUI from "./layouts/admin/BaseUI";
 import Voucher from "./pages/admin/voucher/Voucher";
 import AddVoucher from "./pages/admin/voucher/AddVoucher";
 
-const publicRouters = [
-  { path: "/", element: BaseUI },
+import AddStaff from './pages/admin/account/staff/AddStaff';
+import Staff from './pages/admin/account/staff/Staff';
+import StaffDetail from './pages/admin/account/staff/StaffDetail';
 
-  // { path: "/admin/color", element: Color },
-  // { path: "/admin/size", element: Size },
-  { path: "/admin/voucher", element: Voucher },
-  { path: "/admin/voucher/add", element: AddVoucher },
+const publicRouters = [
+
 ];
 
 const privateRouters = [];
