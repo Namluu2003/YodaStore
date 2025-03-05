@@ -22,7 +22,7 @@ public class VoucherConvert {
                 .quantity(request.getQuantity())
                 .percentReduce(Float.valueOf(request.getPercentReduce()))
                 .minBillValue(new BigDecimal(request.getMinBillValue().toString()))
-                .maxBillValue(new BigDecimal(request.getMinBillValue().toString()))
+                .maxBillValue(new BigDecimal(request.getMaxBillValue().toString()))
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .build();
