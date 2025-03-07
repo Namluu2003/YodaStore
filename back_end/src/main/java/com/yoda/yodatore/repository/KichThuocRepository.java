@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface KichThuocRepository extends JpaRepository<KichThuoc, Long> {
     Boolean existsByNameIgnoreCase(String name);
+    KichThuoc findByName(String name);
 
     @Query(value = """
             SELECT

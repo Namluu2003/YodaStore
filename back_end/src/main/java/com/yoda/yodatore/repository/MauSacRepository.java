@@ -1,5 +1,6 @@
 package com.yoda.yodatore.repository;
 
+
 import com.yoda.yodatore.entity.MauSac;
 import com.yoda.yodatore.infrastructure.request.MauSacRequest;
 import com.yoda.yodatore.infrastructure.response.KichThuocResponse;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MauSacRepository extends JpaRepository<MauSac, Long> {
-
+    MauSac findByName(String name);
     Boolean existsByNameIgnoreCase(String name);
     @Query(value = """
             SELECT

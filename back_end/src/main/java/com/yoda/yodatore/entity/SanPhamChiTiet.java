@@ -47,7 +47,5 @@ public class SanPhamChiTiet extends PrimaryEnity {
     @JsonIgnoreProperties(value = {"creatAt","updateAt","createBy","updateBy","deleted"})
     private MauSac color;
 
-    @JsonIgnoreProperties(value = {"sanPhamChiTiet", "createAt", "updateAt", "createBy", "updateBy", "deleted"})
-    @OneToMany(mappedBy = "sanPhamChiTiet", fetch = FetchType.LAZY)
-    private List<Images> images;
+
 }

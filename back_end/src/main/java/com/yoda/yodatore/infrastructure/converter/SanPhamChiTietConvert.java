@@ -39,20 +39,26 @@ public class SanPhamChiTietConvert {
                 .build();
     }
 
+
     public SanPhamChiTiet convertRequestToEntity(SanPhamChiTiet entity, SanPhamChiTietRequest request) {
         SanPham sanPham = sanPhamRepository.findById(request.getShoe()).get();
         MauSac mauSac = mauSacRepository.findById(request.getColor()).get();
         KichThuoc kichThuoc = kichThuocRepository.findById(request.getSize()).get();
 
-
         entity.setShoe(sanPham);
         entity.setColor(mauSac);
         entity.setSize(kichThuoc);
-        entity.setCode(GenCode.genCodeByName(sanPham.getName()
-                + mauSac.getName() + kichThuoc.getName()));
+        entity.setCode(GenCode.genCodeByName(sanPham.getName() + mauSac.getName() + kichThuoc.getName()));
         entity.setPrice(request.getPrice());
         entity.setQuantity(request.getQuantity());
         entity.setWeight(request.getWeight());
         return entity;
     }
+    public SanPhamChiTiet convertRequestToEntityFast(SanPhamChiTiet entity, SanPhamChiTietRequest request) {
+        entity.setPrice(request.getPrice());
+        entity.setQuantity(request.getQuantity());
+        entity.setWeight(request.getWeight());
+        return entity;
+    }
+
 }
