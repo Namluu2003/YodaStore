@@ -60,11 +60,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
                 sanPhamRepository.save(sanPham);
                 if(request.getListImages().size()>=3)
                     throw new NgoaiLe("Chỉ được thêm tối đa 3 hình ảnh!");
-                if (sanPhamChiTietsave != null) {
-                    for (String x : request.getListImages()) {
-                        anhRepository.save(Images.builder().sanPhamChiTiet(sanPhamChiTietsave).name(x).build());
-                    }
-                }
+//                if (sanPhamChiTietsave != null) {
+//                    for (String x : request.getListImages()) {
+//                        anhRepository.save(Images.builder().sanPhamChiTiet(sanPhamChiTietsave).name(x).build());
+//                    }
+//                }
             }
         }
         return "Thêm thành công!";
@@ -78,11 +78,11 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         if (sanPhamChiTietRepository.findByShoeIdAndColorIdAndSizeId(request.getShoe(), request.getColor(), request.getSize()) != null) {
             if (old.getSize().getId() == request.getSize() && old.getShoe().getId() == request.getShoe() && old.getColor().getId() == request.getColor()) {
                 sanPhamChiTietsave = sanPhamChiTietRepository.save(sanPhamChiTietConvert.convertRequestToEntity(old, request));
-                if(sanPhamChiTietsave!=null){
-                    for (String x: request.getListImages()) {
-                        anhRepository.save(Images.builder().sanPhamChiTiet(sanPhamChiTietsave).name(x).build());
-                    }
-                }
+//                if(sanPhamChiTietsave!=null){
+//                    for (String x: request.getListImages()) {
+//                        anhRepository.save(Images.builder().sanPhamChiTiet(sanPhamChiTietsave).name(x).build());
+//                    }
+//                }
                 return sanPhamChiTietsave;
             }
             throw new NgoaiLe("Phiên bản này đã tồn tại!");

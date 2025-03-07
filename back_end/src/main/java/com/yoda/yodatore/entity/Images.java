@@ -16,9 +16,9 @@ import org.hibernate.annotations.Nationalized;
 @Table(name = "images")
 public class Images extends PrimaryEnity {
     @ManyToOne
-    @JoinColumn(name = "san_pham_chi_tiet_id")
+    @JoinColumn(name = "san_pham_id")
     @JsonIgnore
-    private SanPhamChiTiet sanPhamChiTiet;
+    private SanPham sanPham;
     @Nationalized
     @Column(name = "name")
     private String name;

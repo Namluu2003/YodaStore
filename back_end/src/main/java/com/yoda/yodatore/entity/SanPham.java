@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -41,7 +42,15 @@ public class SanPham extends PrimaryEnity{
     @OneToMany(mappedBy = "shoe")
     List<SanPhamChiTiet> SanPhamChiTiet;
 
+
+    @JsonIgnoreProperties(value = {"sanPham", "createAt", "updateAt", "createBy", "updateBy", "deleted"})
+    @OneToMany(mappedBy = "sanPham", fetch = FetchType.LAZY)
+    private List<Images> images = new ArrayList<>(); // Khởi tạo danh sách mặc định
+
     @Column(name = "mo_ta")
     private String description;
+
+
+
 
 }

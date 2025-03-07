@@ -1,16 +1,16 @@
 package com.yoda.yodatore.infrastructure.request;
 
 import com.yoda.yodatore.infrastructure.common.PageableRequest;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 
 @Getter
 @Setter
-
 public class SanPhamRequest extends PageableRequest {
     private Long id;
     @NotEmpty(message = "Tên không được để trống.")
@@ -21,5 +21,8 @@ public class SanPhamRequest extends PageableRequest {
     private Long category;
     @NotNull(message = "Vui lòng chọn loại đế!")
     private Long sole;
+    @NotNull(message = "Vui lòng chọn hình ảnh!")
+
+    private List<String> listImages;
     private Boolean status;
 }
