@@ -1,0 +1,51 @@
+/* AddShoeModal.css */
+
+/* Đảm bảo modal có đủ không gian */
+.ant-modal-content {
+    padding: 20px;
+  }
+  
+  /* Tùy chỉnh Upload component để hiển thị ảnh theo chiều ngang */
+  .ant-upload-list-picture .ant-upload-list-item {
+    display: inline-block !important; /* Hiển thị các ảnh theo hàng ngang */
+    margin-right: 10px; /* Khoảng cách giữa các ảnh */
+    margin-bottom: 0; /* Loại bỏ khoảng cách dưới để tránh xuống dòng không mong muốn */
+  }
+  
+  /* Đảm bảo container của danh sách ảnh không bị giới hạn chiều rộng */
+  .ant-upload-list-picture {
+    display: flex; /* Sử dụng flexbox để xếp ngang */
+    flex-wrap: nowrap; /* Ngăn xuống dòng */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu vượt quá kích thước */
+  }
+  
+  /* Tùy chỉnh kích thước ảnh */
+  .ant-upload-list-picture .ant-upload-list-item img {
+    width: 100px; /* Chiều rộng ảnh */
+    height: 100px; /* Chiều cao ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+  }
+  
+  /* Tùy chỉnh nút upload */
+  .ant-upload-select-picture {
+    display: inline-block;
+  }
+  
+  /* Đảm bảo nút "Thêm" căn phải */
+  .d-flex.justify-content-end {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  /* Tùy chỉnh button primary */
+  .bg-blue {
+    background-color: #1890ff !important;
+    border-color: #1890ff !important;
+  }
+  
+  /* Tùy chỉnh khi hover button */
+  .bg-blue:hover {
+    background-color: #40a9ff !important;
+    border-color: #40a9ff !important;
+  }
